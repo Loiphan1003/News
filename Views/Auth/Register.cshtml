@@ -1,0 +1,53 @@
+@model News.Models.RegisterViewModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<div class="d-flex justify-content-center align-items-center" style="height: 80dvh;">
+    <div class="border rounded h-fit py-4 d-flex flex-column align-items-center" style="width: 500px;">
+        <h1 class="text-center">Register</h1>
+
+        <form class="w-75 was-validated" novalidate asp-controller="Auth" asp-action="Register" method="post">
+            @* @Html.ValidationSummary() *@
+            <div class="mb-3">
+                <label asp-for="@Model.Email" class="form-label fw-bold">Email</label>
+                <input asp-for="@Model.Email" type="email" class="form-control" placeholder="name@gmail.com" required>
+                <div class="invalid-feedback">Invalid Email</div>
+                <span class="text-danger" >
+                    @Html.ValidationMessage("Email")
+                </span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="@Model.DisplayName" class="form-label fw-bold">DisplayName</label>
+                <input asp-for="@Model.DisplayName" type="text" class="form-control" placeholder="display name"
+                    required>
+                <div class="invalid-feedback">Invalid display name</div>
+                <span class="text-danger" >
+                    @Html.ValidationMessage("DisplayName")
+                </span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="@Model.Password" class="form-label fw-bold">Password</label>
+                <input asp-for="@Model.Password" type="password" class="form-control" placeholder="password" required>
+                <div class="invalid-feedback">Password is not empty</div>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="@Model.RePassword" class="form-label fw-bold">Re-Password</label>
+                <input asp-for="@Model.RePassword" type="password" class="form-control" placeholder="password" required>
+                <div class="invalid-feedback">Regain password is not empty</div>
+            </div>
+
+            <div>
+                <button class="btn btn-primary w-100" type="submit">Register</button>
+            </div>
+        </form>
+
+        <div class="mt-2 d-flex flex-row gap-1">
+            <p class="m-0">Already have account !</p>
+            <a asp-controller="Auth" asp-action="Login" class="fw-bold text-black text-decoration-none">Login</a>
+        </div>
+    </div>
+</div>

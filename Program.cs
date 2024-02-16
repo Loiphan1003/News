@@ -1,7 +1,32 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
+using News.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddAuthentication(options => {
+    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
+})
+.AddCookie(options => 
+{
+    options.LoginPath = "/auth/login";
+    options.AccessDeniedPath = "/AccessDenied";
+})
+.AddGoogle(options => 
+{
+    options.ClientId = builder.Configuration.GetSection("GoogleKeys:clientId").Value!;
+    options.ClientSecret = builder.Configuration.GetSection("GoogleKeys:clientSecret").Value!;
+});
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddDbContext<NewsContext>(options => {
+	options.UseSqlServer(builder.Configuration.GetConnectionString("connect"));
+});
 
 var app = builder.Build();
 
@@ -18,6 +43,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
