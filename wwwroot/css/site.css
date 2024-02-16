@@ -15,6 +15,10 @@ html {
   height: fit-content;
 }
 
+.cursor-pointer{
+  cursor: pointer;
+}
+
 /* CK-Editor */
 .ck-editor__editable[role="textbox"] {
   /* Editing area */
